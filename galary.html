@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery - CodeAlpha</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    .gallery-img {
+      cursor: pointer;
+      transition: transform .3s ease, filter .3s ease;
+      border-radius: .5rem;
+      font-family: Times New Roman;
+    }
+    .gallery-img:hover {
+      transform: scale(1.05);
+      filter: brightness(85%);
+    }
+    .modal-content { background: transparent; border: none; }
+    .modal-body img { width: 100%; border-radius: .5rem; }
+
+    /* Filter effects */
+    .grayscale { filter: grayscale(100%); }
+    .sepia { filter: sepia(100%); }
+    .blur { filter: blur(2px); }
+    .bright { filter: brightness(120%); }
+    .blue { filter: hue-rotate(200deg); }
+
+    /* Plain wording filter nav */
+    .filter-nav {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    .filter-nav span {
+      margin: 0 12px;
+      cursor: pointer;
+      color: #4a8ac7;
+    }
+    .filter-nav span:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">Gallery</h2>
+    
+
+    <!-- Category Buttons -->
+    <div class="text-center mb-4">
+      <button class="btn btn-outline-dark filter-btn me-1" data-filter="all">All</button>
+      <button class="btn btn-outline-dark filter-btn me-1" data-filter="nature">Nature</button>
+      <button class="btn btn-outline-dark filter-btn me-1" data-filter="city">City</button>
+      <button class="btn btn-outline-dark filter-btn me-1" data-filter="animals">Animals</button>
+    </div>
+
+    <!-- Filter Navigation Bar (plain wording only) -->
+    <div class="filter-nav">
+      <span class="effect-btn" data-effect="none">Normal</span> |
+      <span class="effect-btn" data-effect="blue">Blue</span> |
+      <span class="effect-btn" data-effect="bright">Bright</span> |
+      <span class="effect-btn" data-effect="grayscale">Grayscale</span> |
+      <span class="effect-btn" data-effect="sepia">Sepia</span> |
+      <span class="effect-btn" data-effect="blur">Blur</span>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="row g-3">
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item nature">
+        <img src="https://picsum.photos/id/1015/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/1015/1200/800">
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item city">
+        <img src="https://picsum.photos/id/1011/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/1011/1200/800">
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item animals">
+        <img src="https://picsum.photos/id/1025/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/1025/1200/800">
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item nature">
+        <img src="https://picsum.photos/id/1016/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/1016/1200/800">
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item city">
+        <img src="https://picsum.photos/id/1003/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/1003/1200/800">
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item animals">
+        <img src="https://picsum.photos/id/237/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/237/1200/800">
+      </div>
+
+      <!-- New Image 1 (Nature) -->
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item nature">
+        <img src="https://picsum.photos/id/1020/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/1020/1200/800">
+      </div>
+
+      <!-- New Image 2 (City) -->
+      <div class="col-sm-6 col-md-4 col-lg-3 filter-item city">
+        <img src="https://picsum.photos/id/1031/600/400" class="img-fluid gallery-img" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-src="https://picsum.photos/id/1031/1200/800">
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content text-center">
+        <div class="modal-body position-relative">
+          <button class="btn btn-dark position-absolute top-50 start-0 translate-middle-y" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+          <img src="" id="lightboxImg" class="img-fluid">
+          <button class="btn btn-dark position-absolute top-50 end-0 translate-middle-y" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    const images = document.querySelectorAll(".gallery-img");
+    const lightboxImg = document.getElementById("lightboxImg");
+    let currentIndex = 0;
+
+    // Lightbox Open
+    images.forEach((img, i) => {
+      img.addEventListener("click", () => {
+        currentIndex = i;
+        lightboxImg.src = img.dataset.src;
+      });
+    });
+
+    // Next / Prev
+    document.getElementById("nextBtn").onclick = () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      lightboxImg.src = images[currentIndex].dataset.src;
+    };
+    document.getElementById("prevBtn").onclick = () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      lightboxImg.src = images[currentIndex].dataset.src;
+    };
+
+    // Category Filter
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const filter = btn.dataset.filter;
+        document.querySelectorAll(".filter-item").forEach(item => {
+          item.style.display = (filter === "all" || item.classList.contains(filter)) ? "block" : "none";
+        });
+      });
+    });
+
+    // Image Filter Effects
+    document.querySelectorAll(".effect-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const effect = btn.dataset.effect;
+        images.forEach(img => {
+          img.className = "img-fluid gallery-img " + (effect !== "none" ? effect : "");
+        });
+      });
+    });
+  </script>
+</body>
+</html>
